@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Baskets\" />
+    <Folder Include="Discounts\" />
+    <Folder Include="Banners\" />
+    <Folder Include="Payments\" />
+    <Folder Include="Orders\" />
+    <Folder Include="OnlineVisitors\" />
+    <Folder Include="Users\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="5.0.17" />
+    <PackageReference Include="MongoDB.Bson" Version="2.18.0" />
+  </ItemGroup>
+
+</Project>

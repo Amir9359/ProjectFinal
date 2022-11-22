@@ -1,0 +1,84 @@
+﻿@using Application.BasketService;
+@model BasketDto
+
+@{
+    Layout = null;
+    var itemCount = 0;
+
+    if (Model != null )
+    {
+        if (Model?.Items?.Count == 0)
+        {
+            itemCount = 0;
+        }
+        else
+        {
+            itemCount = Model.Items.Count;
+        }
+    }
+
+}
+
+<div class="user-item cart-list">
+    <a href="#">
+        <i class="fal fa-shopping-basket"></i>
+        <span class="bag-items-number">@itemCount</span>
+    </a>
+    <ul>
+        <li class="cart-items">
+            <ul class="do-nice-scroll">
+                @if (Model != null)
+                {
+                    @foreach (var item in Model.Items)
+                    {
+                        <li class="cart-item">
+                            <span class="d-flex align-items-center mb-2">
+                                <a href="#">
+                                    <img src="@item.ImageUrl" alt="@item.CatalogName">
+                                </a>
+                                <span>
+                                    <a asp-controller="Product" asp-action="Details" asp-route-Id="@item.CatalogItemId">
+                                        <span class="title-item">
+                                            @item.CatalogName
+                                        </span>
+                                    </a>
+                                    <span class="color d-flex align-items-center">
+                                        تعداد:
+                                        <span >@item.Quantity</span>
+                                    </span>
+                                </span>
+                            </span>
+                            @{
+                                var price = item.UnitPrice.ToString("n0");
+                            }
+                            <span class="price">@price تومان</span>
+                            <form asp-controller="Basket" asp-action="RemoveItem" asp-route-ItemId="@item.Id" class="remove-item">
+                                <button style="background: transparent;" type="submit"><i class="far fa-trash-alt"></i></button>
+                            </form>
+                        </li>
+                    }
+
+                }
+            </ul>
+        </li>
+        <li class="cart-footer">
+            <span class="d-block text-center mb-3">
+                مبلغ کل:
+               @if (Model != null)
+               {
+                   <span class="total">@Model.Total().ToString("n0")  تومان</span>
+               }
+               else
+               {
+                   <span class="total">0  تومان</span>
+               }
+            </span>
+            <span class="d-block text-center px-2">
+                <a asp-controller="Basket" asp-action="Index" class="btn-cart">
+                    مشاهده سبد خرید
+                    <i class="mi mi-ShoppingCart"></i>
+                </a>
+            </span>
+        </li>
+    </ul>
+</div>

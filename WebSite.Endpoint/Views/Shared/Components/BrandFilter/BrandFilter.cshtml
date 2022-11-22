@@ -1,0 +1,42 @@
+﻿@using Application.Catalogs.CatalogItems.CatalogItemServices;
+@model List<CatalogBrandDto>
+@{
+    Layout = null;
+    var BrandsId = Context.Request.Query["brandId"];
+}
+
+<div class="widget widget-filter-options shadow-around">
+    <div class="widget-title">برند</div>
+    <div class="search-in-options form-element-row">
+        <div class="form-element-with-icon">
+            <input type="text" class="input-element" placeholder="جستجوی نام برند...">
+            <i class="fad fa-file-search"></i>
+        </div>
+    </div>
+    <form asp-action="Index" method="get" class="widget-content">
+        @foreach (var item in Model)
+        {
+            @if (BrandsId.ToList().Any(s => s == item.Id.ToString()))
+            {
+                <label class="container-checkbox" style="">
+                    @item.Brand
+                    <input value="@item.Id" checked name="brandId" type="checkbox" onclick="submit()">
+                    <span class="checkmark"></span>
+                </label>
+            }
+            else
+            {
+                <label class="container-checkbox" style="">
+                    @item.Brand
+                    <input value="@item.Id" name="brandId" type="checkbox" onclick="submit()">
+                    <span class="checkmark"></span>
+                </label>
+            }
+        
+        }
+        @foreach (var item in Context.Request.Query.Where(s => s.Key != "brandId").ToList())
+        {
+            <input name="@item.Key" value="@item.Value" type="hidden" />
+        }
+    </form>
+</div>
